@@ -57,6 +57,10 @@ def chat():
     store_message(user, prompt, response)
     return jsonify({"response": response})
 
+@app.route('/chat', methods=['GET'])
+def chat_ping():
+    return jsonify({"message": "Chat endpoint is alive"}), 200
+
 @app.route('/')
 def index():
     return "PlutoGPT Backend is Running"
