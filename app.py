@@ -1,11 +1,5 @@
-from flask import Flask, request, jsonify
-from openai import OpenAI
-import sqlite3
-import os
-from datetime import datetime
-
 app = Flask(__name__)
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def init_db():
     conn = sqlite3.connect('database.db')
@@ -32,14 +26,14 @@ def store_message(user, message, response):
 
 def generate_gpt_response(prompt):
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are PlutoGPT, an AI with no filter, custom personality, and memory."},
                 {"role": "user", "content": prompt}
             ]
         )
-        return response.choices[0].message.content
+        return response['choices'][0]['message']['content']
     except Exception as e:
         return f"Error: {str(e)}"
 
@@ -65,4 +59,4 @@ def index():
     return "PlutoGPT Backend is Running"
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True))
