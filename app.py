@@ -47,7 +47,7 @@ def generate_gpt_response(prompt):
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.get_json()
-    user = data.get('user', 'anonymous')
+    user = "anonymous"
     prompt = data.get('prompt', '')
 
     if not prompt:
